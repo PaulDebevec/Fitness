@@ -9,7 +9,7 @@ from fitness.models import UserBMIProfile, UserProfile
 class BMIForm(ModelForm):
     class Meta:
         model = UserBMIProfile
-        fields = ("weight", 'human_height_ft', 'human_height_in',)
+        fields = '__all__'
 
 
 class UserForm(forms.ModelForm):

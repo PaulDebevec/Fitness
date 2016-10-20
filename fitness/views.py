@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth.decorators import login_required
 
 from fitness.forms import BMIForm, UserProfileForm, UserForm
 from fitness.models import UserBMIProfile, UserProfile
@@ -30,7 +31,7 @@ def register(request):
     return render(request,
             'register.html',
             {'user_form': user_form, 'profile_form': profile_form,
-             'registered': registered} )
+             'registered': registered})
 
 
 def user_login(request):
@@ -45,10 +46,9 @@ def user_login(request):
             else:
                 return HttpResponse("Your fitness account is disabled.")
         else:
-            print "Invalid login details: {0}, {1}".format(username, password)
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'login.html', {})
+        return render(request, 'login.html',)
 
 
 @login_required(login_url='/login/')
