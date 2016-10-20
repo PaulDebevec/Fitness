@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 from django.utils import timezone
-from datetime import datetime
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -18,15 +17,15 @@ class UserProfile(models.Model):
 class UserBMIProfile(models.Model):
     human_height_ft = models.IntegerField(help_text='Enter height in feet')
     human_height_in = models.IntegerField(help_text='Enter height in inches')
-    human_weight = models.ForeignKey(UserProfile)
+    weight = models.ForeignKey(UserProfile)
 
     def __unicode__(self):
         return 'User BMI - %s' % self.body_mass_calc()
 
     #function to calculate body mass
     def body_mass_calc(self):
-        weight = self.human_weight        #human weight in pounds
-        weight_in_kg = float(weight / 2.2)      #converts human weight from pounds to kilograms
+        weight = self.weight        #human weight in pounds
+        weight_in_kg = float(weight / 2.2)  #converts human weight from pounds to kilograms
         height_ft = self.human_height_ft        #human height in feet
         height_in = self.human_height_in        #human height in inches
         height_total_in = float((height_ft * 12) + height_in) #converts feet to inches and produces total hight in inches

@@ -1,43 +1,9 @@
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
+
 from fitness.forms import BMIForm, UserProfileForm, UserForm
 from fitness.models import UserBMIProfile, UserProfile
-
-
-
-def bmi_view(request):
-    if request.method == 'POST':
-        form = BMIForm(request.POST)
-        if form.is_valid():
-            form.save()
-    else:
-        form = BMIForm()
-        bmi_all = UserBMIProfile.objects.all()
-        bmi_get = UserBMIProfile.objects.get(id=1) #request.user.id - connect user model to profile model
-        context = {
-        'bmi_all': bmi_all,
-        'bmi_get': bmi_get,
-        'form': form,
-        }
-    return render(request, 'base.html', context)
-
-
-def user_weight_view(request):
-    if request.method == 'POST':
-        form = UserProfile(request.POST)
-        if form.is_valid():
-            form.save()
-    else:
-        form = UserProfile()
-        weight_all = UserProfile.objects.all()
-        weight_get = UserProfile.objects.get(id=1)
-        context = {
-            'weight_all': weight_all,
-            'weight_get': weight_get,
-            'form': form,
-        }
-    return render(request, 'weight.html', context)
 
 
 
@@ -77,10 +43,47 @@ def user_login(request):
                 login(request, user)
                 return HttpResponseRedirect('/fitness/')
             else:
-                return HttpResponse("Your Rango account is disabled.")
+                return HttpResponse("Your fitness account is disabled.")
         else:
             print "Invalid login details: {0}, {1}".format(username, password)
             return HttpResponse("Invalid login details supplied.")
     else:
         return render(request, 'login.html', {})
+
+
+@login_required(login_url='/login/')
+def bmi_view(request):
+    if request.method == 'POST':
+        form = BMIForm(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = BMIForm()
+        bmi_all = UserBMIProfile.objects.all()
+        bmi_get = UserBMIProfile.objects.get(user=request.user)
+        context = {
+        'bmi_all': bmi_all,
+        'bmi_get': bmi_get,
+        'form': form,
+        }
+    return render(request, 'base.html', context)
+
+
+def user_weight_view(request):
+    if request.method == 'POST':
+        form = UserProfile(request.POST)
+        if form.is_valid():
+            form.save()
+    else:
+        form = UserProfile()
+        weight_all = UserProfile.objects.all()
+        weight_get = UserProfile.objects.get(id=1)
+        context = {
+            'weight_all': weight_all,
+            'weight_get': weight_get,
+            'form': form,
+        }
+    return render(request, 'weight.html', context)
+
+
 

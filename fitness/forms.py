@@ -1,7 +1,7 @@
 from django import forms
-from django.forms import ModelForm
 from django.contrib.auth.models import User
 
+from django.forms import ModelForm
 from fitness.models import UserBMIProfile, UserProfile
 
 
@@ -9,7 +9,7 @@ from fitness.models import UserBMIProfile, UserProfile
 class BMIForm(ModelForm):
     class Meta:
         model = UserBMIProfile
-        fields = ('human_weight', 'human_height_ft', 'human_height_in', )
+        fields = ("weight", 'human_height_ft', 'human_height_in',)
 
 
 class UserForm(forms.ModelForm):
