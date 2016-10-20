@@ -20,5 +20,4 @@ from fitness import urls as fitness_urls
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^fitness/', include(fitness_urls)),
-    #url(r'^fitness/', include(fitness_urls, namespace='fitness')),
 ]

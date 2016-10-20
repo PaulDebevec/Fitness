@@ -33,6 +33,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='userbmiprofile',
             name='human_weight',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fitness.UserWeight'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='fitness.models.UserProfile'),
         ),
     ]
