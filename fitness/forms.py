@@ -5,16 +5,14 @@ from django.forms import ModelForm
 from fitness.models import UserBMIProfile, UserProfile
 
 
-
 class BMIForm(ModelForm):
     class Meta:
         model = UserBMIProfile
-        fields = '__all__'
+        fields = ('human_height_ft', 'human_height_in', 'weight')
 
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
@@ -23,5 +21,4 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ('user_weight', 'date')
-
+        fields = ('user_weight', 'user_height_ft', 'user_height_in')

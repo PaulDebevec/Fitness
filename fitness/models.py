@@ -4,10 +4,11 @@ from django.contrib.auth.models import User
 from django.db import models
 
 
-
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    user_weight = models.FloatField(help_text='Enter weight in pounds')
+    user_weight = models.IntegerField(verbose_name='Your weight:', help_text='Enter weight in pounds', default=150)
+    user_height_ft = models.IntegerField(verbose_name='Your height in feet:', default=5)
+    user_height_in = models.IntegerField(verbose_name='Your height in inches:', default=10)
     date = models.DateTimeField(default=timezone.now)
 
     def __unicode__(self):
@@ -15,22 +16,18 @@ class UserProfile(models.Model):
 
 
 class UserBMIProfile(models.Model):
-    human_height_ft = models.IntegerField(help_text='Enter height in feet')
-    human_height_in = models.IntegerField(help_text='Enter height in inches')
-    weight = models.ForeignKey(UserProfile)
-
+    human_height_ft = models.IntegerField(verbose_name='Height', help_text='Enter height in feet')
+    human_height_in = models.IntegerField(verbose_name='Inches', help_text='Enter height in inches')
+    weight = models.IntegerField(verbose_name='Weight', default=150, help_text='Enter weight in pounds')
     def __unicode__(self):
-        return 'User BMI - %s' % self.body_mass_calc()
+        return 'User BMI - {}'.format(self.body_mass_calc())
 
     #function to calculate body mass
     def body_mass_calc(self):
-        weight = self.weight        #human weight in pounds
-        weight_in_kg = float(weight / 2.2)  #converts human weight from pounds to kilograms
-        height_ft = self.human_height_ft        #human height in feet
-        height_in = self.human_height_in        #human height in inches
-        height_total_in = float((height_ft * 12) + height_in) #converts feet to inches and produces total hight in inches
-        height_in_m = float(height_total_in * .0254)         #converts human height from inches to meters
-        body_mass = float(weight_in_kg / (height_in_m * 2))    #calculates BMI
+        weight_in_kg = self.weight / 2.2  #converts human weight from pounds to kilograms
+        height_total_in = self.human_height_ft * 12 + self.human_height_in #converts feet to inches and produces total hight in inches
+        height_in_m = height_total_in * .0254       #converts human height from inches to meters
+        body_mass = weight_in_kg / (height_in_m * 2)  #calculates BMI
         return round(body_mass, 1)
 
     @property

@@ -7,6 +7,14 @@ from fitness.forms import BMIForm, UserProfileForm, UserForm
 from fitness.models import UserBMIProfile, UserProfile
 
 
+def dashboard(request):
+    if request.method == 'POST':
+        form = BMIForm(request.POST)
+        bmi_hist = UserBMIProfile.objects.all()
+        display = {'bmi_hist': bmi_hist,
+                   'form': form, }
+    return render(request, 'dashboard.html', display)
+
 
 def register(request):
     registered = False
@@ -42,7 +50,7 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/fitness/')
+                return HttpResponseRedirect('/fitness/dashboard')
             else:
                 return HttpResponse("Your fitness account is disabled.")
         else:
@@ -51,7 +59,7 @@ def user_login(request):
         return render(request, 'login.html',)
 
 
-@login_required(login_url='/login/')
+#@login_required(login_url='/login/')
 def bmi_view(request):
     if request.method == 'POST':
         form = BMIForm(request.POST)
@@ -66,24 +74,24 @@ def bmi_view(request):
         'bmi_get': bmi_get,
         'form': form,
         }
-    return render(request, 'base.html', context)
+    return render(request, 'bmi.html', context)
 
 
-def user_weight_view(request):
+#@login_required(login_url='/login/')
+def user_profile_view(request):
     if request.method == 'POST':
         form = UserProfile(request.POST)
         if form.is_valid():
             form.save()
     else:
         form = UserProfile()
-        weight_all = UserProfile.objects.all()
-        weight_get = UserProfile.objects.get(id=1)
-        context = {
-            'weight_all': weight_all,
-            'weight_get': weight_get,
+        user_all = UserProfile.objects.all()
+        user_get = UserProfile.objects.get(user=request.user)
+        contains = {
+            'user_all': user_all,
+            'user_get': user_get,
             'form': form,
-        }
-    return render(request, 'weight.html', context)
-
+            }
+    return render(request, 'profile.html', contains)
 
 
