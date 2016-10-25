@@ -1,11 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>BMI Calculator</title>
-</head>
-<body>
-<h1>BMI Calculator</h1>
-<p>{{ bmi_get.bmi_feedback }}</p>
-</body>
-</html>
+{% block page %}
+
+    <div class="container">
+
+        <div class="jumbotron">
+            <h1>BMI Calculator</h1>
+
+            {% if login %}
+                <strong>BMI TEST</strong>
+                <h1>{{ bmi_feedback.as_p }}</h1>
+                <form id="bmi_form.bmi_feedback" method="post">
+
+                    {% csrf_token %}
+
+                    <!-- Display each form. The as_p method wraps each element in a paragraph
+                         (<p>) element. This ensures each element appears on a new line,
+                         making everything look neater. -->
+                    {{ profile_form.as_p }}
+                    {{ bmi_feedback.as_p }}
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

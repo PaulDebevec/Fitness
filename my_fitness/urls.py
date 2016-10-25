@@ -16,8 +16,12 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from fitness import urls as fitness_urls
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^fitness/', include(fitness_urls)),
+
+    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}),
+    url(r'^logout/$', auth_views.logout, {'next_page': '/login/'}),
 ]

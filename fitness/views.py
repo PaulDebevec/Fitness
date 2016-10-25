@@ -12,8 +12,13 @@ def my_fitness_view(request):
         form = BMIForm(request.POST)
         contains = {
             'user_all': UserProfile.objects.all(),
-            'user_get': UserProfile.objects.get(user=request.user),
+            #'user_get': UserProfile.objects.get(user=request.user),
             'form': form,
+        }
+    if request.method == 'GET':
+        contains = {
+            'user_all': UserProfile.objects.all(),
+            #'user_get': UserProfile.objects.get(user=request.user),
         }
     return render(request, 'dashboard.html', contains)
 
@@ -29,18 +34,18 @@ def register(request):
             user.save()
             profile = profile_form.save(commit=False)
             profile.user = user
-        #     if 'picture' in request.FILES:
-        #         profile.picture = request.FILES['picture']
-        #     profile.save()
-        #     registered = True
-        # else:
-        #     print user_form.errors, profile_form.errors
+            #     if 'picture' in request.FILES:
+            #         profile.picture = request.FILES['picture']
+            #     profile.save()
+            #     registered = True
+            # else:
+            #     print user_form.errors, profile_form.errors
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
     return render(request, 'register.html',
-            {'user_form': user_form, 'profile_form': profile_form,
-             'registered': registered})
+                  {'user_form': user_form, 'profile_form': profile_form,
+                   'registered': registered})
 
 
 def user_login(request):
@@ -71,14 +76,14 @@ def bmi_view(request):
         bmi_all = UserBMIProfile.objects.all()
         bmi_get = UserBMIProfile.objects.get(user=request.user)
         context = {
-        'bmi_all': bmi_all,
-        'bmi_get': bmi_get,
-        'form': form,
+            'bmi_all': bmi_all,
+            'bmi_get': bmi_get,
+            'form': form,
         }
     return render(request, 'bmi.html', context)
 
 
-#@login_required(login_url='/login/')
+@login_required(login_url='/login/')
 def user_profile_view(request):
     if request.method == 'POST':
         form = UserProfile(request.POST)
@@ -92,7 +97,7 @@ def user_profile_view(request):
             'user_all': user_all,
             'user_get': user_get,
             'form': form,
-            }
+        }
     return render(request, 'profile.html', contains)
 
 

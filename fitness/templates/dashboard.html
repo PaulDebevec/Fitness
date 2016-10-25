@@ -1,11 +1,20 @@
 {% extends "base.html" %}
+
 {% block page %}
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard</title>
-</head>
-<body>
-<h1>Dashboard</h1>
-</body>
-</html>
+
+    <div class="container">
+
+        <div class="jumbotron">
+            <h1>Dashboard</h1>
+
+            {% csrf_token %}
+
+            <form>
+                <h1>{{ user_form.as_p }}</h1>
+                <h1>{{ profile_form.as_p }}</h1>
+            </form>
+
+        </div>
+    </div>
+
 {% endblock %}
