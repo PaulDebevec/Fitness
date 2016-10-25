@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from fitness.forms import BMIForm, UserProfileForm, UserForm
 from fitness.models import UserBMIProfile, UserProfile
 
+#request.user
+
 
 def my_fitness_view(request):
     if request.method == 'POST':
@@ -34,19 +36,13 @@ def register(request):
             user.save()
             profile = profile_form.save(commit=False)
             profile.user = user
-            #     if 'picture' in request.FILES:
-            #         profile.picture = request.FILES['picture']
-            #     profile.save()
-            #     registered = True
-            # else:
-            #     print user_form.errors, profile_form.errors
+            profile.save()
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
     return render(request, 'register.html',
                   {'user_form': user_form, 'profile_form': profile_form,
                    'registered': registered})
-
 
 def user_login(request):
     if request.method == 'POST':
@@ -65,7 +61,7 @@ def user_login(request):
         return render(request, 'login.html',)
 
 
-#@login_required(login_url='/login/')
+@login_required(login_url='/login/')
 def bmi_view(request):
     if request.method == 'POST':
         form = BMIForm(request.POST)
@@ -74,7 +70,7 @@ def bmi_view(request):
     else:
         form = BMIForm()
         bmi_all = UserBMIProfile.objects.all()
-        bmi_get = UserBMIProfile.objects.get(user=request.user)
+        bmi_get = UserBMIProfile.objects.get(profile__user=request.user)
         context = {
             'bmi_all': bmi_all,
             'bmi_get': bmi_get,

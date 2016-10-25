@@ -134,3 +134,5 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_REDIRECT_URL = '/fitness/dashboard/'
+
+APPEND_SLASH=False
