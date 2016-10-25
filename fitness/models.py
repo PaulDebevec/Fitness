@@ -10,7 +10,6 @@ class UserProfile(models.Model):
     user_height_ft = models.IntegerField(verbose_name='Your height in feet:', default=5)
     user_height_in = models.IntegerField(verbose_name='Your height in inches:', default=10)
     date = models.DateTimeField(default=timezone.now)
-
     def __unicode__(self):
         return self.user.username
 
@@ -19,6 +18,7 @@ class UserBMIProfile(models.Model):
     human_height_ft = models.IntegerField(verbose_name='Height', help_text='Enter height in feet')
     human_height_in = models.IntegerField(verbose_name='Inches', help_text='Enter height in inches')
     weight = models.IntegerField(verbose_name='Weight', default=150, help_text='Enter weight in pounds')
+    profile = models.ForeignKey(UserProfile)
     def __unicode__(self):
         return 'User BMI - {}'.format(self.body_mass_calc())
 

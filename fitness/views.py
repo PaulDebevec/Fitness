@@ -7,13 +7,15 @@ from fitness.forms import BMIForm, UserProfileForm, UserForm
 from fitness.models import UserBMIProfile, UserProfile
 
 
-def dashboard(request):
+def my_fitness_view(request):
     if request.method == 'POST':
         form = BMIForm(request.POST)
-        bmi_hist = UserBMIProfile.objects.all(user=request.user)
-        display = {'bmi_hist': bmi_hist,
-                   'form': form, }
-    return render(request, 'dashboard.html', display)
+        contains = {
+            'user_all': UserProfile.objects.all(),
+            'user_get': UserProfile.objects.get(user=request.user),
+            'form': form,
+        }
+    return render(request, 'dashboard.html', contains)
 
 
 def register(request):
@@ -36,8 +38,7 @@ def register(request):
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
-    return render(request,
-            'register.html',
+    return render(request, 'register.html',
             {'user_form': user_form, 'profile_form': profile_form,
              'registered': registered})
 
