@@ -10,7 +10,7 @@ from fitness.models import UserBMIProfile, UserProfile
 def dashboard(request):
     if request.method == 'POST':
         form = BMIForm(request.POST)
-        bmi_hist = UserBMIProfile.objects.all()
+        bmi_hist = UserBMIProfile.objects.all(user=request.user)
         display = {'bmi_hist': bmi_hist,
                    'form': form, }
     return render(request, 'dashboard.html', display)
@@ -95,3 +95,12 @@ def user_profile_view(request):
     return render(request, 'profile.html', contains)
 
 
+# def dashboard(request):
+#     user_name = user.
+#     user_height
+#     user_weight
+#     user_bmi
+#
+#     return render(request, 'dashboard.html', display)
+#
+#

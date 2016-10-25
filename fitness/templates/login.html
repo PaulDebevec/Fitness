@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <!-- Is anyone getting tired of repeatedly entering the header over and over?? -->
-        <title>Fitness</title>
-    </head>
+{% extends "base.html" %}
 
-    <body>
-        <h1>Login to My Fitness</h1>
+{% block page %}
 
-        <form id="login_form" method="post" action="/fitness/login/">
-            {% csrf_token %}
-            Username: <input type="text" name="username" value="" size="50" />
-            <br />
-            Password: <input type="password" name="password" value="" size="50" />
-            <br />
+    <div class="container">
 
-            <input type="submit" value="submit" />
-        </form>
+        <div class="jumbotron">
+            <h1>Login to My Fitness</h1>
 
-    </body>
-</html>
+            <form id="login_form" method="post" action="/fitness/login/">
+                {% csrf_token %}
+                Username: <input type="text" name="username" value="" size="50" />
+                <br />
+                Password: <input type="password" name="password" value="" size="50" />
+                <br />
+                <input class="btn btn-primary btn-md" type="submit" value="Submit" />
+                <a class="btn btn-primary btn-md" href="../register">Register</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
