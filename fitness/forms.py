@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 
 from django.forms import ModelForm
-from fitness.models import UserBMIProfile, UserProfile
+from fitness.models import UserBMIProfile, UserProfile, WorkoutTracker
 
 
 class BMIForm(ModelForm):
@@ -22,3 +22,7 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('user_weight', 'user_height_ft', 'user_height_in')
+
+
+class TrackWorkoutForm(forms.ModelForm):
+    form = WorkoutTracker

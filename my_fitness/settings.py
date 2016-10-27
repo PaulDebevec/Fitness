@@ -127,12 +127,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "fitness", 'static')
-
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'fitness', 'static')
-]
-
-LOGIN_REDIRECT_URL = '/fitness/dashboard/'
-
-APPEND_SLASH=False
+# STATIC_ROOT = os.path.join(BASE_DIR, "fitness", 'static')
+#
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'fitness', 'static')
+# ]
+#
+# LOGIN_REDIRECT_URL = '/fitness/dashboard/'
+#
+# APPEND_SLASH=False

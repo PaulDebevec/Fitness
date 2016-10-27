@@ -44,6 +44,7 @@ def register(request):
                   {'user_form': user_form, 'profile_form': profile_form,
                    'registered': registered})
 
+
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -61,7 +62,7 @@ def user_login(request):
         return render(request, 'login.html',)
 
 
-@login_required(login_url='/login/')
+#@login_required(login_url='/login/')
 def bmi_view(request):
     if request.method == 'POST':
         form = BMIForm(request.POST)

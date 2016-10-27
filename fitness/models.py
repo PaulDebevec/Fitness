@@ -3,6 +3,40 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
 
+LIFTING_CARDIO = (('Lifting', 'Lifting'),
+                  ('Cardio', 'Cardio'))
+
+MUSCLE_GROUP = (('Chest', 'Chest'),
+                ('Back', 'Back'),
+                ('Shoulders', 'Shoulders'),
+                ('Abs', 'Abs'),
+                ('Legs', 'Legs'),
+                ('Arms', 'Arms'))
+
+CARDIO_TYPE_WORKOUT = (('Running', 'Running'),
+                       ('Biking', 'Biking'))
+
+LIFTING_TYPE = (('Bench press', 'Bench Press'),
+                ('Chest fly', 'Chest fly'),
+                ('Dips Machine fly', 'Dips Machine fly'),
+                ('Push-up', 'Push-up'),
+                ('Chin-up', 'Chin-up'),
+                ('Pulldown', 'Pulldown'),
+                ('Pull-up', 'Pull-up'),
+                ('Shoulder shrug', 'Shoulder shrug'),
+                ('Shoulder press', 'Shoulder press'),
+                ('Biceps Curl', 'Biceps Curl'),
+                ('Chin-up', 'Chin-up'),
+                ('Close-grip bench press', 'Close-grip bench press'),
+                ('Dips', 'Dips'),
+                ('Triceps extension', 'Triceps extension'),
+                ('Forearms', 'Forearms'),
+                ('Crunch', 'Crunch'),
+                ('Leg raise', 'Leg raise'),
+                ('Russian twist', 'Russian twist'),
+                ('Sit-up', 'Sit-up'),
+                ('Deadlift', 'Deadlift'))
+
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
@@ -43,4 +77,40 @@ class UserBMIProfile(models.Model):
             return bmi_string
 
 
+class CardioWorkout(models.Model):
+    exercise_type = models.CharField(max_length=5, choices=CARDIO_TYPE_WORKOUT)
+    distance = models.FloatField(default=1)
+    date = models.DateField(auto_now_add=True)
 
+
+class MuscleGroup(models.Model):
+    muscle_group = models.CharField(max_length=5, choices=MUSCLE_GROUP)
+
+
+class WorkoutTracker(models.Model):
+    muscle_group = models.CharField(max_length=5, choices=MUSCLE_GROUP)
+    lift_type = models.CharField(max_length=25, choices=LIFTING_TYPE)
+    sets = models.IntegerField()
+    reps = models.IntegerField()
+    assisted = models.BooleanField(default=False)
+    raw_weight = models.IntegerField()
+    date = models.DateField(auto_now_add=True)
+    def __unicode__(self):
+        return '{} sets, {} reps, with {} weight.'.format(self.sets, self.reps, self.raw_weight)
+
+
+
+
+"""
+class WorkoutType(models.Model):
+    exercise_type = models.CharField(max_length=5, choices=LIFTING_CARDIO)
+    cardio_type = models.CharField(max_length=5, choices=CARDIO_TYPE_WORKOUT)
+    muslce_group = models.CharField(max_length=5, choices=MUSCLE_GROUP)
+
+
+class WorkoutTracker(models.Model):
+    reps = models.IntegerField(default=5)
+    distance = models.FloatField(default=1)
+    weight = models.IntegerField()
+
+"""
