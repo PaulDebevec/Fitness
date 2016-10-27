@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from django.db import models
 
 LIFTING_CARDIO = (('Lifting', 'Lifting'),
-                  ('Cardio', 'Cardio'))
+                  ('Cardio', 'Cardio'),
+                  ('Swimming', 'Swimming'))
 
 MUSCLE_GROUP = (('Chest', 'Chest'),
                 ('Back', 'Back'),
@@ -90,17 +91,17 @@ class UserBMIProfile(models.Model):
 
 
 class CardioWorkout(models.Model):
-    exercise_type = models.CharField(max_length=5, choices=CARDIO_TYPE_WORKOUT)
+    exercise_type = models.CharField(max_length=15, choices=CARDIO_TYPE_WORKOUT)
     distance = models.FloatField(default=1)
     #date = models.DateField(default=timezone.now)
 
 
-class MuscleGroup(models.Model):
-    muscle_group = models.CharField(max_length=5, choices=MUSCLE_GROUP)
+# class MuscleGroup(models.Model):
+#     muscle_group = models.CharField(max_length=5, choices=MUSCLE_GROUP)
 
 
 class WorkoutTracker(models.Model):
-    muscle_group = models.CharField(max_length=5, choices=MUSCLE_GROUP)
+    #muscle_group = models.CharField(max_length=5, choices=MUSCLE_GROUP)
     lift_type = models.CharField(max_length=25, choices=LIFTING_TYPE)
     sets = models.IntegerField()
     reps = models.IntegerField()
@@ -110,8 +111,9 @@ class WorkoutTracker(models.Model):
     #date = models.DateField(auto_now_add=True)
 
     def __unicode__(self):
-        return '{} sets, {} reps, with {} weight.'.format(self.sets, self.reps,
-                                                          self.raw_weight)
+        return '{}, {} sets, {} reps, with {} weight.'.format(self.lift_type,
+                                                        self.sets, self.reps,
+                                                              self.raw_weight)
 
 
 

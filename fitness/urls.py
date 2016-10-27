@@ -7,6 +7,6 @@ urlpatterns = [
     url(r'^register/?$', register, name='register'),
     url(r'^dashboard/?$', my_fitness_view, name='dashboard'),
     url(r'^my_fitness/?$', my_fitness_view, name='my_fitness'),
-    url(r'^track_workout/?$', track_workout_view, name='track_wokout')
+    url(r'^trackworkout/?$', track_workout_view, name='trackwokout')
     #url(r'^', my_fitness_view, name='dashboard')
 ]

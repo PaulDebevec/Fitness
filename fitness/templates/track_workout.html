@@ -6,9 +6,6 @@
 
         <div class="jumbotron">
             <h1>My Fitness</h1>
-
-            {% csrf_token %}
-
             <form>
                 <h1>{{ TrackWorkoutForm.as_p }}</h1>
             </form>
@@ -17,3 +14,5 @@
     </div>
 
 {% endblock %}
+
+{% csrf_token %}
