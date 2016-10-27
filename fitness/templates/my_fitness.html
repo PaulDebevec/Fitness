@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block page %}
+
+    <div class="container">
+
+        <div class="jumbotron">
+            <h1>My Fitness</h1>
+
+            {% csrf_token %}
+
+            <form>
+                <h1>{{ user_form.as_p }}</h1>
+                <h1>{{ profile_form.as_p }}</h1>
+            </form>
+
+        </div>
+    </div>
+
+{% endblock %}

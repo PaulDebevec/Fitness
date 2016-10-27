@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from fitness.forms import BMIForm, UserProfileForm, UserForm
-from fitness.models import UserBMIProfile, UserProfile
+from fitness.forms import BMIForm, UserProfileForm, UserForm, WorkoutTrackerForm
+from fitness.models import UserBMIProfile, UserProfile, WorkoutTracker
 
 #request.user
 
@@ -22,7 +22,7 @@ def my_fitness_view(request):
             'user_all': UserProfile.objects.all(),
             #'user_get': UserProfile.objects.get(user=request.user),
         }
-    return render(request, 'dashboard.html', contains)
+    return render(request, 'my_fitness.html', contains)
 
 
 def register(request):
@@ -98,12 +98,21 @@ def user_profile_view(request):
     return render(request, 'profile.html', contains)
 
 
-# def dashboard(request):
-#     user_name = user.
-#     user_height
-#     user_weight
-#     user_bmi
-#
-#     return render(request, 'dashboard.html', display)
-#
-#
+def track_workout_view(request):
+    if request.method == 'POST':
+        form = WorkoutTrackerForm(request.POST)
+        if form.is_valid():
+            form.save()
+    form = WorkoutTracker()
+    workout_all = WorkoutTracker.objects.all()
+    workout_get = WorkoutTracker.objects.get(id=1)
+    contains = {
+        'workout_all': workout_all,
+        'workout_get': workout_get,
+        'form': form,
+    }
+    return render(request, 'track_workout.html', contains)
+
+
+
+

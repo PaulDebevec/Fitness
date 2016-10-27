@@ -16,57 +16,69 @@ MUSCLE_GROUP = (('Chest', 'Chest'),
 CARDIO_TYPE_WORKOUT = (('Running', 'Running'),
                        ('Biking', 'Biking'))
 
-LIFTING_TYPE = (('Bench press', 'Bench Press'),
-                ('Chest fly', 'Chest fly'),
-                ('Dips Machine fly', 'Dips Machine fly'),
+LIFTING_TYPE = (('Bench Press', 'Bench Press'),
+                ('Chest Fly', 'Chest Fly'),
+                ('Dips Machine Fly', 'Dips Machine Fly'),
                 ('Push-up', 'Push-up'),
                 ('Chin-up', 'Chin-up'),
                 ('Pulldown', 'Pulldown'),
                 ('Pull-up', 'Pull-up'),
-                ('Shoulder shrug', 'Shoulder shrug'),
-                ('Shoulder press', 'Shoulder press'),
+                ('Shoulder Shrug', 'Shoulder Shrug'),
+                ('Shoulder Press', 'Shoulder Press'),
                 ('Biceps Curl', 'Biceps Curl'),
                 ('Chin-up', 'Chin-up'),
-                ('Close-grip bench press', 'Close-grip bench press'),
+                ('Close-Grip Bench Press', 'Close-Grip Bench Press'),
                 ('Dips', 'Dips'),
-                ('Triceps extension', 'Triceps extension'),
+                ('Triceps Extension', 'Triceps Extension'),
                 ('Forearms', 'Forearms'),
                 ('Crunch', 'Crunch'),
-                ('Leg raise', 'Leg raise'),
-                ('Russian twist', 'Russian twist'),
+                ('Leg Raise', 'Leg Raise'),
+                ('Russian Twist', 'Russian Twist'),
                 ('Sit-up', 'Sit-up'),
                 ('Deadlift', 'Deadlift'))
 
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
-    user_weight = models.IntegerField(verbose_name='Your weight:', help_text='Enter weight in pounds', default=150)
-    user_height_ft = models.IntegerField(verbose_name='Your height in feet:', default=5)
-    user_height_in = models.IntegerField(verbose_name='Your height in inches:', default=10)
+    user_weight = models.IntegerField(verbose_name='Your weight:',
+                                      help_text='Enter weight in pounds', default=150)
+    user_height_ft = models.IntegerField(verbose_name='Your height in feet:',
+                                         default=5)
+    user_height_in = models.IntegerField(verbose_name='Your height in inches:',
+                                         default=10)
     date = models.DateTimeField(default=timezone.now)
+
     def __unicode__(self):
-        return self.user.username
+        return '{} {}, {}, {}'.format(self.user, self.user_weight,
+                                      self.user_height_ft,
+                                      self.user_height_in)
 
 
 class UserBMIProfile(models.Model):
-    human_height_ft = models.IntegerField(verbose_name='Height', help_text='Enter height in feet')
-    human_height_in = models.IntegerField(verbose_name='Inches', help_text='Enter height in inches')
-    weight = models.IntegerField(verbose_name='Weight', default=150, help_text='Enter weight in pounds')
+    human_height_ft = models.IntegerField(verbose_name='Height',
+                                          help_text='Enter height in feet')
+    human_height_in = models.IntegerField(verbose_name='Inches',
+                                          help_text='Enter height in inches')
+    weight = models.IntegerField(verbose_name='Weight', default=150,
+                                 help_text='Enter weight in pounds')
     profile = models.ForeignKey(UserProfile)
+
     def __unicode__(self):
         return 'User BMI - {}'.format(self.body_mass_calc())
 
     #function to calculate body mass
     def body_mass_calc(self):
         weight_in_kg = self.weight / 2.2  #converts human weight from pounds to kilograms
-        height_total_in = self.human_height_ft * 12 + self.human_height_in #converts feet to inches and produces total hight in inches
-        height_in_m = height_total_in * .0254       #converts human height from inches to meters
+        # converts feet to inches and produces total hight in inches
+        height_total_in = self.human_height_ft * 12 + self.human_height_in
+        height_in_m = height_total_in * .0254 #converts human height from inches to meters
         body_mass = weight_in_kg / (height_in_m * 2)  #calculates BMI
         return round(body_mass, 1)
 
     @property
     def bmi_feedback(self): #Returns/displays BMI results
-        bmi_string = "Your BMI is %s. A healthy average is between 18.5 and 25." % self.body_mass_calc()
+        bmi_string = "Your BMI is %s. A healthy average is between 18.5 and 25."\
+                     % self.body_mass_calc()
         if self.body_mass_calc() < 18.5:
             return bmi_string
         elif self.body_mass_calc() >= 18.5 and self.body_mass_calc() < 25:
@@ -80,7 +92,7 @@ class UserBMIProfile(models.Model):
 class CardioWorkout(models.Model):
     exercise_type = models.CharField(max_length=5, choices=CARDIO_TYPE_WORKOUT)
     distance = models.FloatField(default=1)
-    date = models.DateField(auto_now_add=True)
+    #date = models.DateField(default=timezone.now)
 
 
 class MuscleGroup(models.Model):
@@ -93,10 +105,13 @@ class WorkoutTracker(models.Model):
     sets = models.IntegerField()
     reps = models.IntegerField()
     assisted = models.BooleanField(default=False)
+    assisted_reps = models.IntegerField()
     raw_weight = models.IntegerField()
-    date = models.DateField(auto_now_add=True)
+    #date = models.DateField(auto_now_add=True)
+
     def __unicode__(self):
-        return '{} sets, {} reps, with {} weight.'.format(self.sets, self.reps, self.raw_weight)
+        return '{} sets, {} reps, with {} weight.'.format(self.sets, self.reps,
+                                                          self.raw_weight)
 
 
 
@@ -112,5 +127,8 @@ class WorkoutTracker(models.Model):
     reps = models.IntegerField(default=5)
     distance = models.FloatField(default=1)
     weight = models.IntegerField()
+
+
+dict(WORKOUT_TYPE).get(self.##, ''), self.##
 
 """

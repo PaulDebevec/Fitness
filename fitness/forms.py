@@ -13,6 +13,7 @@ class BMIForm(ModelForm):
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
+
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
@@ -24,5 +25,7 @@ class UserProfileForm(forms.ModelForm):
         fields = ('user_weight', 'user_height_ft', 'user_height_in')
 
 
-class TrackWorkoutForm(forms.ModelForm):
-    form = WorkoutTracker
+class WorkoutTrackerForm(forms.ModelForm):
+    class Meta:
+        form = WorkoutTracker
+        fields = '__all__'
