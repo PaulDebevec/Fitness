@@ -50,6 +50,7 @@ def register(request):
                                          human_height_in=profile.user_height_in,
                                          weight=profile.user_weight)
             bmi_profile.save()
+            #render REDIRECT------------
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
@@ -110,12 +111,13 @@ def user_profile_view(request):
 
 @login_required(login_url='/login/')
 def add_workout_view(request):
-    user = 'user__user=request.user'
+    # user = 'user__user=request.user'
     if request.method == 'POST':
         workout_form = WorkoutTrackerForm(request.POST)
         if workout_form.is_valid():
-            date_workout = workout_form.save()
-            date_workout.user = request.user(user__user=request.user)
+            date_workout = workout_form.save(commit=False)
+            profile = UserProfile.objects.get(user=request.user)
+            date_workout.user = profile
             # if workout_form.is_valid():
             #     date_workout.save()
             #     workout_form.save()
