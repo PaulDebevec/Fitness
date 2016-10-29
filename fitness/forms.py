@@ -5,7 +5,7 @@ from django.forms import ModelForm
 from fitness.models import UserBMIProfile, UserProfile, WorkoutTracker
 
 
-class BMIForm(ModelForm):
+class BMIForm(forms.ModelForm):
     class Meta:
         model = UserBMIProfile
         fields = ('human_height_ft', 'human_height_in', 'weight')

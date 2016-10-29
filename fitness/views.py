@@ -9,18 +9,21 @@ from fitness.models import UserBMIProfile, UserProfile, WorkoutTracker
 #request.user
 
 
+def index(request):
+    display = 'Test'
+    context = {
+        'display': display
+    }
+    return render(request, 'base.html', context)
+
+@login_required(login_url='/login/')
 def my_fitness_view(request):
     if request.method == 'POST':
-        form = BMIForm(request.POST)
+        form = WorkoutTrackerForm(request.POST)
+        user_get = UserProfile.objects.get(profile__user=request.user),
         contains = {
-            'user_all': UserProfile.objects.all(),
-            #'user_get': UserProfile.objects.get(user=request.user),
+            'user_get': user_get,
             'form': form,
-        }
-    if request.method == 'GET':
-        contains = {
-            'user_all': UserProfile.objects.all(),
-            #'user_get': UserProfile.objects.get(user=request.user),
         }
     return render(request, 'my_fitness.html', contains)
 
@@ -37,6 +40,10 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
+            bmi_profile = UserBMIProfile(human_height_ft=profile.user_height_ft,
+                                         human_height_in=profile.user_height_in,
+                                         weight=profile.user_weight)
+            bmi_profile.save()
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
@@ -62,7 +69,7 @@ def user_login(request):
         return render(request, 'login.html',)
 
 
-#@login_required(login_url='/login/')
+@login_required(login_url='/login/')
 def bmi_view(request):
     if request.method == 'POST':
         form = BMIForm(request.POST)
@@ -70,7 +77,6 @@ def bmi_view(request):
             form.save()
     else:
         form = BMIForm()
-        bmi_all = UserBMIProfile.objects.all()
         bmi_get = UserBMIProfile.objects.get(profile__user=request.user)
         context = {
             'bmi_all': bmi_all,
@@ -112,6 +118,7 @@ def track_workout_view(request):
         'form': form,
     }
     return render(request, 'track_workout.html', contains)
+
 
 
 

@@ -8,7 +8,7 @@
             <h1>Dashboard</h1>
 
             {% csrf_token %}
-
+            <a href="/fitness/register/">Register</a>
             <form>
                 <h1>{{ user_form.as_p }}</h1>
                 <h1>{{ profile_form.as_p }}</h1>

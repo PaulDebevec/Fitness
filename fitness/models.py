@@ -50,7 +50,7 @@ class UserProfile(models.Model):
     date = models.DateTimeField(default=timezone.now)
 
     def __unicode__(self):
-        return '{} {}, {}, {}'.format(self.user, self.user_weight,
+        return '{} {}, {}, {}'.format(self.user.username, self.user_weight,
                                       self.user_height_ft,
                                       self.user_height_in)
 
@@ -111,8 +111,10 @@ class WorkoutTracker(models.Model):
     #date = models.DateField(auto_now_add=True)
 
     def __unicode__(self):
-        return '{}, {} sets, {} reps, with {} weight.'.format(self.lift_type,
-                                                        self.sets, self.reps,
+        return '{}, {} sets, {} reps ({} assisted), with {} weight.'.format(
+                                                            self.lift_type,
+                                                            self.sets, self.reps,
+                                                            self.assisted_reps,
                                                               self.raw_weight)
 
 

@@ -52,124 +52,123 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Fitness</a>
+            <a class="navbar-brand" href="/fitness/dashboard">Fitness</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="../dashboard/">Dashboard<span class="sr-only">(current)</span></a>
+                <li><a href="/fitness/dashboard/">Dashboard<span class="sr-only">(current)</span></a>
                 </li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Your Fitness</a></li>
-                <li>{% block bmi %}<a href="../bmi/">BMI Calculator</a>{% endblock %}</li>
+                <li><a href="/fitness/my_fitness/">Your Fitness</a></li>
+                <li>{% block bmi %}
+                    <a href="/fitness/bmi/">BMI Calculator</a>{% endblock %}
+                </li>
                 <li><a href="#">Workout Tracker</a></li>
-                <li><a href="/logout/">Logout<span class="sr-only">(current)</span></a>
-                </li>
-                {#                <li class="dropdown">#}
-                {#                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"#}
-                {#                       role="button" aria-haspopup="true" aria-expanded="true">Dropdown#}
-                {#                        <span class="caret"></span></a>#}
-                {#                    <ul class="dropdown-menu">#}
-                {#                        <li><a href="/logout/">Logout<span class="sr-only">(current)</span></a>#}
-                {#                </li>#}
-                {#                        <li><a href="#">Logout</a></li>#}
-                {#                        <li><a href="#">Another action</a></li>#}
-                {#                        <li><a href="#">Something else here</a></li>#}
-                {#                        <li role="separator" class="divider"></li>#}
-                {#                        <li><a href="#">Separated link</a></li>#}
-                {#                        <li role="separator" class="divider"></li>#}
-                {#                        <li><a href="#">One more separated link</a></li>#}
-                {#                    </ul>#}
-                {#                </li>#}
-            </ul>
-            <form class="navbar-form navbar-right">
-                <div class="form-group">
-                    <input type="text" class="form-control"
-                           placeholder="Search">
-                </div>
-                <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-{#            <ul class="nav navbar-nav navbar-right">#}
-{#                <li><a href="#">Link</a></li>#}
-{#                <li class="dropdown">#}
-{#                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"#}
-{#                       role="button" aria-haspopup="true" aria-expanded="false">Dropdown#}
-{#                        <span class="caret"></span></a>#}
-{#                    <ul class="dropdown-menu">#}
-{#                        <li><a href="#">Action</a></li>#}
-{#                        <li><a href="#">Another action</a></li>#}
-{#                        <li><a href="#">Something else here</a></li>#}
+                <li><a href="/logout/">Logout<span
+                        class="sr-only">(current)</span></a></li>
+
+                <li class="Profile Options">
+                    <a href="/fitness/login/" class="dropdown-toggle"
+                       data-toggle="dropdown"
+                       role="button" aria-haspopup="true" aria-expanded="true">Profile
+                        Options
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/fitness/dashboard">Logout<span
+                                class="sr-only">(current)</span></a></li>
+                        <li><a href="/fitness/profile/">Profile</a></li>
+                        <li><a href="/fitness/login/">Login</a></li>
+                        <li><a href="#">Log Out</a></li>
 {#                        <li role="separator" class="divider"></li>#}
-{#                        <li><a href="#">Separated link</a></li>#}
-{#                    </ul>#}
-{#                </li>#}
-{#            </ul>#}
+{#                                                <li><a href="#">Separated link</a></li>#}
+{#                                                <li role="separator" class="divider"></li>#}
+{#                                                <li><a href="#">One more separated link</a></li>#}
+                                            </ul>
+                                        </li>
+                    </ul>
+
+                    </form>
+                                <ul class="nav navbar-nav navbar-right">
+{#                                    <li><a href="#">Link</a></li>#}
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown-toggle"
+                                           role="button" aria-haspopup="true" aria-expanded="false">Profile Options
+                                            <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="#">Separated link</a></li>
+                                        </ul>
+                                    </li>
+                                    {#                    <form class="navbar-form navbar-right">#}
+{#                        <div class="form-group">#}
+{#                            <input type="text" class="form-control"#}
+{#                                   placeholder="Search">#}
+{#                        </div>#}
+{#                        <button type="submit" class="btn btn-default">Submit#}
+{#                        </button>#}
+                    {#            </ul>#}
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
 </nav>
-{%  block page %}
+{% block page %}
     <div class="container">
 
-    <!-- The justified navigation menu is meant for single line per list item.
-         Multiple lines will require custom code not provided by Bootstrap. -->
-    <div class="masthead">
-        <nav>
-            <ul class="nav nav-justified">
-                {#                <li><a href="#">BMI Calculator</a></li>#}
-                {#                <li><a href="#">Workout Tracker</a></li>#}
-            </ul>
-        </nav>
-    </div>
+        <!-- The justified navigation menu is meant for single line per list item.
+             Multiple lines will require custom code not provided by Bootstrap. -->
+        <div class="masthead">
+            <nav>
+                <ul class="nav nav-justified">
+                    {#                <li><a href="#">BMI Calculator</a></li>#}
+                    {#                <li><a href="#">Workout Tracker</a></li>#}
+                </ul>
+            </nav>
+        </div>
 
-    <!-- Jumbotron -->
-    <div class="jumbotron">
-        <h1>Marketing stuff!</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget
-            quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-            condimentum nibh, ut fermentum massa justo sit amet.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Get started
-            today</a></p>
+        <!-- Jumbotron -->
     </div>
     <div class="jumbotron">
-        <h1>Fitness</h1>
-        <p>...</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn
-            more</a></p>
+        <h1>My Fitness</h1>
+        <p>Track your workout</p>
+        <p><a class="btn btn-primary btn-lg" href="/fitness/my_fitness/"
+              role="button">Continue</a></p>
     </div>
 
     <!-- Example row of columns -->
-    <div class="row">
-        <div class="col-lg-4">
-            <h2>Safari bug warning!</h2>
-            <p class="text-danger">As of v9.1.2, Safari exhibits a bug in which
-                resizing your browser horizontally causes rendering errors in
-                the justified nav that are cleared upon refreshing.</p>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-primary" href="#" role="button">View
-                details &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-            <h2>Heading</h2>
-            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-                fermentum massa justo sit amet risus. Etiam porta sem malesuada
-                magna mollis euismod. Donec sed odio dui. </p>
-            <p><a class="btn btn-primary" href="#" role="button">View
-                details &raquo;</a></p>
-        </div>
-        <div class="col-lg-4">
-            <h2>Heading</h2>
-            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,
-                egestas eget quam. Vestibulum id ligula porta felis euismod
-                semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-                condimentum nibh, ut fermentum massa.</p>
-            <p><a class="btn btn-primary" href="#" role="button">View
-                details &raquo;</a></p>
-        </div>
+    {#    <div class="row">#}
+    {#        <div class="col-lg-4">#}
+    {#            <h2>Safari bug warning!</h2>#}
+    {#            <p class="text-danger">As of v9.1.2, Safari exhibits a bug in which#}
+    {#                resizing your browser horizontally causes rendering errors in#}
+    {#                the justified nav that are cleared upon refreshing.</p>#}
+    {#            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,#}
+    {#                tellus ac cursus commodo, tortor mauris condimentum nibh, ut#}
+    {#                fermentum massa justo sit amet risus. Etiam porta sem malesuada#}
+    {#                magna mollis euismod. Donec sed odio dui. </p>#}
+    {#            <p><a class="btn btn-primary" href="#" role="button">View#}
+    {#                details &raquo;</a></p>#}
+    {#        </div>#}
+    {#        <div class="col-lg-4">#}
+    {#            <h2>Heading</h2>#}
+    {#            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,#}
+    {#                tellus ac cursus commodo, tortor mauris condimentum nibh, ut#}
+    {#                fermentum massa justo sit amet risus. Etiam porta sem malesuada#}
+    {#                magna mollis euismod. Donec sed odio dui. </p>#}
+    {#            <p><a class="btn btn-primary" href="#" role="button">View#}
+    {#                details &raquo;</a></p>#}
+    {#        </div>#}
+    {#        <div class="col-lg-4">#}
+    {#            <h2>Heading</h2>#}
+    {#            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in,#}
+    {#                egestas eget quam. Vestibulum id ligula porta felis euismod#}
+    {#                semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris#}
+    {#                condimentum nibh, ut fermentum massa.</p>#}
+    {#            <p><a class="btn btn-primary" href="#" role="button">View#}
+    {#                details &raquo;</a></p>#}
+    {#        </div>#}
     </div>
 {% endblock %}
 <!-- Site footer -->
