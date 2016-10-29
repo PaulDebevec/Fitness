@@ -102,6 +102,7 @@ class CardioWorkout(models.Model):
 
 class WorkoutTracker(models.Model):
     #muscle_group = models.CharField(max_length=5, choices=MUSCLE_GROUP)
+    user = models.ForeignKey(UserProfile)
     lift_type = models.CharField(max_length=25, choices=LIFTING_TYPE)
     sets = models.IntegerField()
     reps = models.IntegerField()

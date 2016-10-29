@@ -45,7 +45,8 @@ def register(request):
             profile = profile_form.save(commit=False)
             profile.user = user
             profile.save()
-            bmi_profile = UserBMIProfile(human_height_ft=profile.user_height_ft,
+            bmi_profile = UserBMIProfile(profile=profile,
+                                         human_height_ft=profile.user_height_ft,
                                          human_height_in=profile.user_height_in,
                                          weight=profile.user_weight)
             bmi_profile.save()
@@ -99,7 +100,7 @@ def user_profile_view(request):
             form.save()
     else:
         form = UserProfile()
-        user_get = UserProfile.objects.get(user=request.user)
+        user_get = UserProfile.objects.get(user__user=request.user)
         contains = {
             'user_get': user_get,
             'form': form,
@@ -109,20 +110,22 @@ def user_profile_view(request):
 
 @login_required(login_url='/login/')
 def add_workout_view(request):
-    workout = get_object_or_404(WorkoutTracker, user=request.user)
+    user = 'user__user=request.user'
     if request.method == 'POST':
-        workout_form = WorkoutTrackerForm(request.POST, instance=workout)
-
+        workout_form = WorkoutTrackerForm(request.POST)
         if workout_form.is_valid():
-            date_workout = workout_form.save(commit=False)
-            date_workout.author = request.user
-
-            if workout_form.is_valid():
-                date_workout.save()
-                workout_form.save()
-                return render(request, 'track_workout.html')
-
-
+            date_workout = workout_form.save()
+            date_workout.user = request.user(user__user=request.user)
+            # if workout_form.is_valid():
+            #     date_workout.save()
+            #     workout_form.save()
+        return render(request, 'track_workout.html')
+    else:
+        workout_form = WorkoutTrackerForm()
+    context = {
+        'form': workout_form,
+    }
+    return render(request, 'track_workout.html', context)
 
 
 

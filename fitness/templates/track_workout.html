@@ -6,8 +6,10 @@
 
         <div class="jumbotron">
             <h1>Track Workout</h1>
-            <form>
+            <form id="workout_form" method="post" action="/fitness/trackworkout/">
                 <p>{{ form }}</p>
+                <input class="btn btn-primary btn-md" href="/fitness/trackworkout" type="submit" value="Submit"/>
+                {% csrf_token %}
             </form>
 
         </div>

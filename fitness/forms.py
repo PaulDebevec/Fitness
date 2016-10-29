@@ -27,5 +27,6 @@ class UserProfileForm(forms.ModelForm):
 
 class WorkoutTrackerForm(forms.ModelForm):
     class Meta:
-        form = WorkoutTracker
+        model = WorkoutTracker
         fields = '__all__'
+        exclude = ('user',)

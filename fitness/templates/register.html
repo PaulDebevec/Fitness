@@ -13,7 +13,7 @@
             {% else %}
                 <strong>Register here!</strong><br />
 
-                <form id="user_form" method="post" action="/fitness/dashboard"
+                <form id="user_form" method="post" action="/fitness/register/"
                       enctype="multipart/form-data">
 
                     {% csrf_token %}
@@ -25,7 +25,7 @@
                     {{ profile_form.as_p }}
 
                     <!-- Provide a button to click to submit the form. -->
-                    <input class="btn btn-primary btn-md" type="submit" name="submit" value="Register" href="fitness/dashboard"/>
+                    <input class="btn btn-primary btn-md" type="submit" name="submit" value="Register"/>
 {#                    <input class="btn btn-primary btn-md" type="submit" name="submit" value="Register" href="/fitness/dashboard"/>#}
 {#                    <a class="btn btn-primary btn-md" href="../dashboard">Submit</a>#}
                 </form>
