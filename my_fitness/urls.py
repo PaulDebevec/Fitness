@@ -17,7 +17,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from fitness import urls as fitness_urls
 from django.contrib.auth import views as auth_views
-from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
