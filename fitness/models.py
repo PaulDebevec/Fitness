@@ -108,7 +108,7 @@ class WorkoutTracker(models.Model):
     assisted = models.BooleanField(default=False)
     assisted_reps = models.IntegerField()
     raw_weight = models.IntegerField()
-    #date = models.DateField(auto_now_add=True)
+    date = models.DateField(default=timezone.now)
 
     def __unicode__(self):
         return '{}, {} sets, {} reps ({} assisted), with {} weight.'.format(

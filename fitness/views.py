@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import login_required
 from fitness.forms import BMIForm, UserProfileForm, UserForm, WorkoutTrackerForm
 from fitness.models import UserBMIProfile, UserProfile, WorkoutTracker
 
-#request.user
+
+# request.user
 
 
 def index(request):
@@ -16,17 +17,20 @@ def index(request):
     }
     return render(request, 'base.html', context)
 
+
 @login_required(login_url='/login/')
 def my_fitness_view(request):
     if request.method == 'POST':
         form = WorkoutTrackerForm(request.POST)
-        user_get = UserProfile.objects.get(profile__user=request.user),
-        contains = {
-            'user_get': user_get,
-            'form': form,
-        }
-
-        return render(request, 'my_fitness.html', contains)
+        if form.is_valid():
+            form.save()
+    form = WorkoutTracker()
+    workout_get = WorkoutTracker.objects.get(id=1)
+    contains = {
+        'workout_get': workout_get,
+        'form': form,
+    }
+    return render(request, 'my_fitness.html', contains)
 
 
 def register(request):
@@ -67,7 +71,7 @@ def user_login(request):
         else:
             return HttpResponse("Invalid login details supplied.")
     else:
-        return render(request, 'login.html',)
+        return render(request, 'login.html', )
 
 
 @login_required(login_url='/login/')
@@ -104,20 +108,30 @@ def user_profile_view(request):
 
 
 @login_required(login_url='/login/')
-def track_workout_view(request):
+def add_workout_view(request):
+    workout = get_object_or_404(WorkoutTracker, user=request.user)
     if request.method == 'POST':
-        form = WorkoutTrackerForm(request.POST)
-        if form.is_valid():
-            form.save()
-    form = WorkoutTracker()
-    workout_get = WorkoutTracker.objects.get(id=1)
-    contains = {
-        'workout_get': workout_get,
-        'form': form,
-    }
-    return render(request, 'track_workout.html', contains)
+        workout_form = WorkoutTrackerForm(request.POST, instance=workout)
+
+        if workout_form.is_valid():
+            date_workout = workout_form.save(commit=False)
+            date_workout.author = request.user
+
+            if workout_form.is_valid():
+                date_workout.save()
+                workout_form.save()
+                return render(request, 'track_workout.html')
 
 
 
 
 
+"""    if request.method == 'POST':
+        workout = WorkoutTrackerForm(data=request.POST)
+        form = WorkoutTracker()
+        contains = {
+            'workout': workout,
+            'form': form,
+            }
+        return render(request, 'track_workout.html', contains)
+"""
