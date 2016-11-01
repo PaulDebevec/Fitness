@@ -3,8 +3,8 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 
-from fitness.forms import BMIForm, UserProfileForm, UserForm, WorkoutTrackerForm
-from fitness.models import UserBMIProfile, UserProfile, WorkoutTracker
+from fitness.forms import BMIForm, UserProfileForm, UserForm, AddWorkoutForm
+from fitness.models import UserBMIProfile, UserProfile, AddWorkout
 
 
 # request.user
@@ -20,15 +20,16 @@ def index(request):
 
 @login_required(login_url='/login/')
 def my_fitness_view(request):
-    if request.method == 'POST':
-        form = WorkoutTrackerForm(request.POST)
-        if form.is_valid():
-            form.save()
-    form = WorkoutTracker()
-    workout_get = WorkoutTracker.objects.get(id=1)
+    # if request.method == 'POST':
+    user = request.user
+    workout_get = AddWorkout.user.objects.get(user=request.user)
+    wo_filter = AddWorkout.objects.filter(user=request.user, **kwargs)
+    # else:
+    #     return HttpResponseRedirect('/fitness/trackworkout/')
     contains = {
         'workout_get': workout_get,
-        'form': form,
+        'wo_filter': wo_filter,
+        'user': user,
     }
     return render(request, 'my_fitness.html', contains)
 
@@ -50,7 +51,7 @@ def register(request):
                                          human_height_in=profile.user_height_in,
                                          weight=profile.user_weight)
             bmi_profile.save()
-            #render REDIRECT------------
+            return HttpResponseRedirect('/fitness/login/')
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
@@ -84,11 +85,10 @@ def bmi_view(request):
             form.save()
     else:
         form = BMIForm()
-        bmi_get = UserBMIProfile.objects.get(profile__user=request.user)
-        context = {
-            'bmi_all': bmi_all,
-            'bmi_get': bmi_get,
-            'form': form,
+    bmi_get = UserBMIProfile.objects.get(profile__user=request.user)
+    context = {
+        'bmi_get': bmi_get,
+        'form': form,
         }
     return render(request, 'bmi.html', context)
 
@@ -101,37 +101,36 @@ def user_profile_view(request):
             form.save()
     else:
         form = UserProfile()
-        user_get = UserProfile.objects.get(user__user=request.user)
-        contains = {
-            'user_get': user_get,
-            'form': form,
+    user_get = UserProfile.objects.filter(user__user=request.user)
+    contains = {
+        'user_get': user_get,
+        'form': form,
         }
     return render(request, 'profile.html', contains)
 
 
 @login_required(login_url='/login/')
 def add_workout_view(request):
-    # user = 'user__user=request.user'
     if request.method == 'POST':
-        workout_form = WorkoutTrackerForm(request.POST)
+        workout_form = AddWorkoutForm(request.POST)
         if workout_form.is_valid():
             date_workout = workout_form.save(commit=False)
             profile = UserProfile.objects.get(user=request.user)
             date_workout.user = profile
-            # if workout_form.is_valid():
-            #     date_workout.save()
-            #     workout_form.save()
         return render(request, 'track_workout.html')
     else:
-        workout_form = WorkoutTrackerForm()
+        workout_form = AddWorkoutForm()
+    user = request.user
     context = {
         'form': workout_form,
+        'user': user,
     }
     return render(request, 'track_workout.html', context)
 
 
 
-"""    if request.method == 'POST':
+"""
+if request.method == 'POST':
         workout = WorkoutTrackerForm(data=request.POST)
         form = WorkoutTracker()
         contains = {
@@ -139,4 +138,11 @@ def add_workout_view(request):
             'form': form,
             }
         return render(request, 'track_workout.html', contains)
+
+# user = 'user__user=request.user'
+            # if workout_form.is_valid():
+            #     date_workout.save()
+            #     workout_form.save()
+
+
 """

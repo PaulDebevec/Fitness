@@ -31,7 +31,6 @@ LIFTING_TYPE = (('Bench Press', 'Bench Press'),
                 ('Close-Grip Bench Press', 'Close-Grip Bench Press'),
                 ('Dips', 'Dips'),
                 ('Triceps Extension', 'Triceps Extension'),
-                ('Forearms', 'Forearms'),
                 ('Crunch', 'Crunch'),
                 ('Leg Raise', 'Leg Raise'),
                 ('Russian Twist', 'Russian Twist'),
@@ -100,7 +99,7 @@ class CardioWorkout(models.Model):
 #     muscle_group = models.CharField(max_length=5, choices=MUSCLE_GROUP)
 
 
-class WorkoutTracker(models.Model):
+class AddWorkout(models.Model):
     #muscle_group = models.CharField(max_length=5, choices=MUSCLE_GROUP)
     user = models.ForeignKey(UserProfile)
     lift_type = models.CharField(max_length=25, choices=LIFTING_TYPE)
