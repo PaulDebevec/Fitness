@@ -24,4 +24,5 @@ urlpatterns = [
 
     url(r'^login/?$', auth_views.login, {'template_name': 'login.html'}),
     url(r'^logout/?$', auth_views.logout, {'next_page': '/login/'}),
+    url(r'^$', include(fitness_urls)),
 ]
