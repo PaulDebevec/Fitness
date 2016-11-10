@@ -111,7 +111,7 @@ class AddWorkout(models.Model):
     date = models.DateField(default=timezone.now)
 
     def __unicode__(self):
-        return '{}, {} sets, {} reps ({} assisted), with {} weight.'.format(
+        return '{}, {} sets, {} reps ({} assisted), with {} pounds.'.format(
                                                             self.lift_type,
                                                             self.sets, self.reps,
                                                             self.assisted_reps,

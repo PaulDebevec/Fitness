@@ -30,3 +30,4 @@ class AddWorkoutForm(forms.ModelForm):
         model = AddWorkout
         fields = '__all__'
         exclude = ('user',)
+

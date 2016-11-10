@@ -1,13 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from fitness.forms import BMIForm, UserProfileForm, UserForm, AddWorkoutForm
 from fitness.models import UserBMIProfile, UserProfile, AddWorkout
-
-
-# request.user
 
 
 def index(request):
@@ -20,17 +17,13 @@ def index(request):
 
 @login_required(login_url='/login/')
 def my_fitness_view(request):
-    # if request.method == 'POST':
-    user = request.user
-    workout_get = AddWorkout.user.objects.get(user=request.user)
-    wo_filter = AddWorkout.objects.filter(user=request.user, **kwargs)
-    # else:
-    #     return HttpResponseRedirect('/fitness/trackworkout/')
+    profile = UserProfile.objects.get(user=request.user)
+    f_obj = AddWorkout.objects.filter(user=profile)
+
     contains = {
-        'workout_get': workout_get,
-        'wo_filter': wo_filter,
-        'user': user,
-    }
+            'profile': profile,
+            'filter': f_obj,
+        }
     return render(request, 'my_fitness.html', contains)
 
 
@@ -114,9 +107,9 @@ def add_workout_view(request):
     if request.method == 'POST':
         workout_form = AddWorkoutForm(request.POST)
         if workout_form.is_valid():
-            date_workout = workout_form.save(commit=False)
+            save_workout = workout_form.save(commit=False)
             profile = UserProfile.objects.get(user=request.user)
-            date_workout.user = profile
+            save_workout.user = profile
         return render(request, 'track_workout.html')
     else:
         workout_form = AddWorkoutForm()
