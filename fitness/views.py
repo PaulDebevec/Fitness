@@ -19,7 +19,7 @@ def index(request):
 def my_fitness_view(request):
     form = AddWorkoutForm(request.POST)
     profile = UserProfile.objects.get(user=request.user)
-    f_obj = AddWorkout.objects.filter(user=profile)
+    f_obj = AddWorkout.objects.filter(user=profile).order_by('-date')
     contains = {
             'profile': profile,
             'f_obj': f_obj,

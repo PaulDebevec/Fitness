@@ -8,7 +8,12 @@
             {% csrf_token %}
             <h1>Workout History</h1>
 
-                <p>{{ f_obj }}</p>
+            <ul>
+                {% for obj in f_obj %}
+                    <li>{{ obj }}</li>
+                {% endfor %}
+            </ul>
+
 
 
         </div>
@@ -16,3 +21,4 @@
 
 {% endblock %}
 
+{#<p>{{ f_obj }}</p>#}
