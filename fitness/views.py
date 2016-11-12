@@ -17,13 +17,14 @@ def index(request):
 
 @login_required(login_url='/login/')
 def my_fitness_view(request):
+    form = AddWorkoutForm(request.POST)
     profile = UserProfile.objects.get(user=request.user)
     f_obj = AddWorkout.objects.filter(user=profile)
-
     contains = {
             'profile': profile,
-            'filter': f_obj,
-        }
+            'f_obj': f_obj,
+            'form': form,
+            }
     return render(request, 'my_fitness.html', contains)
 
 
@@ -110,6 +111,7 @@ def add_workout_view(request):
             save_workout = workout_form.save(commit=False)
             profile = UserProfile.objects.get(user=request.user)
             save_workout.user = profile
+            save_workout.save()
         return render(request, 'track_workout.html')
     else:
         workout_form = AddWorkoutForm()
